@@ -1,0 +1,109 @@
+/* Style for standard window buttons (minimize, maximize) */
+.window-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.window-button .ikonli-font-icon {
+    -fx-icon-color: #555555; /* Dark grey icon color */
+    -fx-icon-size: 16px;
+}
+
+.window-button:hover .ikonli-font-icon {
+    -fx-icon-color: black; /* Black on hover */
+}
+
+
+.window-button-close {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.window-button-close .ikonli-font-icon {
+    -fx-icon-color: #555555;
+    -fx-icon-size: 18px; /* Slightly larger for better visibility */
+}
+
+.window-button-close:hover {
+    -fx-background-color: #FF605C; /* Red background on hover */
+    -fx-background-radius: 50%;
+}
+
+.window-button-close:hover .ikonli-font-icon {
+    -fx-icon-color: white; /* White icon on hover */
+}
+
+.window-button:hover {
+    -fx-background-color: #EAEAEA; /* Red background on hover */
+    -fx-background-radius: 50%;
+}
+
+/* Style class to make the entire Accordion transparent */
+.transparent-accordion {
+    -fx-background-color: transparent;
+}
+
+.transparent-accordion .titled-pane {
+    -fx-background-color: transparent;
+}
+
+.transparent-accordion .titled-pane > .title {
+    -fx-background-color: transparent;
+}
+
+/* Target the actual text label inside the title bar */
+.transparent-accordion .titled-pane > .title .text {
+    -fx-fill: white; /* Use -fx-fill for text nodes */
+}
+
+/* Target the arrow node inside the title bar */
+.transparent-accordion .titled-pane > .title .arrow-button .arrow {
+    -fx-background-color: white;
+    -fx-mark-color: white; /* This is often the property that controls the arrow color */
+}
+
+/* Target the content area of each TitledPane */
+.transparent-accordion .titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Target the arrow within the title bar */
+.transparent-accordion .titled-pane > .title .arrow {
+    -fx-background-color: white;
+}
+
+/* Target the content area of each TitledPane */
+.transparent-accordion .titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Style for the divider of a horizontal SplitPane */
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+/* Style for the divider of a vertical SplitPane */
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+.styled-text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px; /* Rounded corners */
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 12px; /* Top/Bottom and Left/Right padding */
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #A9A9A9; /* Color for prompt text */
+}
+
+/* Style for when the text field is focused (clicked on) */
+.styled-text-field:focused {
+    -fx-border-color: #4F46E5; /* A modern purple/blue for focus */
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 70, 229, 0.2), 5, 0, 0, 0); /* Subtle shadow on focus */
+}
