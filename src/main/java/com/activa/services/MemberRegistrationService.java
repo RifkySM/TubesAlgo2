@@ -35,7 +35,7 @@ public class MemberRegistrationService {
 
         memberRepository.create(newMember);
 
-        MemberRequest newRequest = new MemberRequest(newMember.getId(), requestNote);
+        MemberRequest newRequest = new MemberRequest(newMember, requestNote);
         requestRepository.create(newRequest);
 
         return newMember;

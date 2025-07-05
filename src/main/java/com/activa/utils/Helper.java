@@ -1,6 +1,14 @@
 package com.activa.utils;
+import com.activa.App;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class Helper {
     /**
@@ -48,4 +56,32 @@ public class Helper {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    /**
+     * Opens a new JavaFX window using the given stage, FXML file path, and window title.
+     *
+     * @param stage     the {@link Stage} to set the scene on
+     * @param fxmlPath  the path to the FXML file (must start with a slash, e.g. "/views/auth/login.fxml")
+     * @param title     the title to set for the window
+     *
+     * This method attempts to load the specified FXML file and apply it to the given stage.
+     * If the file cannot be loaded or found, it prints an error message to the console.
+     */
+    public static void openWindow(Stage stage, String fxmlPath, String title) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource(fxmlPath)));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Failed to load FXML file: " + fxmlPath);
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.err.println("Error: FXML file not found at path: " + fxmlPath);
+            e.printStackTrace();
+        }
+    }
+
 }

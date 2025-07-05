@@ -5,6 +5,7 @@ import com.activa.utils.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -24,6 +26,7 @@ public class LoginController {
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+    @FXML private HBox topbar;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -36,16 +39,26 @@ public class LoginController {
     }
 
     private void setupDraggableWindow() {
-        rootPane.setOnMousePressed(event -> {
+        topbar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
+            topbar.setCursor(Cursor.CLOSED_HAND);
         });
 
-        rootPane.setOnMouseDragged(event -> {
-            Stage stage = (Stage) rootPane.getScene().getWindow();
+        topbar.setOnMouseDragged(event -> {
+            Stage stage = (Stage) topbar.getScene().getWindow();
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+
+        topbar.setOnMouseReleased(event -> {
+            topbar.setCursor(Cursor.HAND);
+        });
+
+        topbar.setOnMouseEntered(event -> {
+            topbar.setCursor(Cursor.HAND);
+        });
+
     }
 
     @FXML
@@ -100,19 +113,39 @@ public class LoginController {
 
             dashboardStage.initStyle(StageStyle.UNDECORATED);
             dashboardStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
             Helper.showAlert("Login Failed", "Invalid username or password. Please try again.", Alert.AlertType.ERROR);
         }
     }
 
+    @FXML
+    private void openRegistrationWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/club/registration.fxml"));
+            Parent dashboardRoot = loader.load();
+
+            Stage dashboardStage = new Stage();
+            dashboardStage.setTitle("Activa - Registration");
+            dashboardStage.setScene(new Scene(dashboardRoot));
+
+            dashboardStage.initStyle(StageStyle.UNDECORATED);
+            closeCurrentStage();
+            dashboardStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Helper.showAlert("Internal Error!", "Please contact the Admin!", Alert.AlertType.ERROR);
+        }
+    }
 
     /**
      * Closes the current login stage.
      */
     private void closeCurrentStage() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
+        if (stage != null) {
         stage.close();
+        }
     }
 }

@@ -107,3 +107,9 @@
     -fx-border-color: #4F46E5; /* A modern purple/blue for focus */
     -fx-effect: dropshadow(three-pass-box, rgba(79, 70, 229, 0.2), 5, 0, 0, 0); /* Subtle shadow on focus */
 }
+
+.button.active {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

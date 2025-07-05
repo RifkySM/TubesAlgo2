@@ -1,5 +1,6 @@
 package com.activa.repositories;
 
+import com.activa.models.Member;
 import com.activa.models.MemberRequest;
 import com.activa.utils.SessionManager; // Assuming SessionManager is in this package
 
@@ -15,8 +16,10 @@ import java.util.UUID;
 public class MemberRequestRepository {
 
     private final Connection connection;
+    private final MemberRepository memberRepository;
 
     public MemberRequestRepository() {
+        this.memberRepository = new MemberRepository();
         this.connection = SessionManager.getInstance().getDatabaseConnection();
     }
 
@@ -28,9 +31,14 @@ public class MemberRequestRepository {
      * @throws SQLException if a database access error occurs.
      */
     private MemberRequest mapResultSetToMemberRequest(ResultSet rs) throws SQLException {
+        UUID memberId = rs.getObject("member_id", UUID.class);
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException("Data integrity error: Request found for non-existent member ID: " + memberId));
+
         return new MemberRequest(
                 rs.getObject("id", UUID.class),
-                rs.getObject("member_id", UUID.class),
+                member,
                 MemberRequest.RequestStatus.valueOf(rs.getString("status")),
                 rs.getString("note"),
                 rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null,
@@ -48,7 +56,7 @@ public class MemberRequestRepository {
         String sql = "INSERT INTO requests (id, member_id, status, note) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setObject(1, request.getId());
-            pstmt.setObject(2, request.getMemberId());
+            pstmt.setObject(2, request.getMember().getId());
             pstmt.setString(3, request.getStatus().name());
             pstmt.setString(4, request.getNote());
             pstmt.executeUpdate();

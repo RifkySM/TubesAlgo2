@@ -10,7 +10,6 @@ module com.activa {
     requires atlantafx.base;
 
     exports com.activa;
-    exports com.activa.controllers;
     exports com.activa.controllers.auth;
     exports com.activa.controllers.layout;
     exports com.activa.middlewares;
@@ -20,9 +19,9 @@ module com.activa {
     exports com.activa.utils;
 
     opens com.activa to javafx.fxml;
-    opens com.activa.controllers to javafx.fxml;
     opens com.activa.controllers.layout to javafx.fxml;
     opens com.activa.controllers.auth to javafx.fxml;
+    opens com.activa.controllers.registration to javafx.fxml;
     opens com.activa.middlewares to javafx.fxml;
     opens com.activa.models to javafx.fxml;
 }

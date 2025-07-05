@@ -38,7 +38,7 @@ public class MemberRequestService {
         }
 
         requestRepository.update(request.getId(), MemberRequest.RequestStatus.APPROVED, approvalNote);
-        memberRepository.updateStatus(request.getMemberId(), true);
+        memberRepository.updateStatus(request.getMember().getId(), true);
     }
 
     /**

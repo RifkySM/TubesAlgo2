@@ -1,5 +1,6 @@
 package com.activa.middlewares;
 
+import com.activa.utils.Helper;
 import com.activa.utils.SessionManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -70,20 +71,8 @@ public class AuthMiddleware {
             System.err.println("Error: Primary stage is not set in AuthMiddleware. Please call AuthMiddleware.setPrimaryStage() on startup.");
             return;
         }
-        try {
-            Parent loginRoot = FXMLLoader.load(Objects.requireNonNull(AuthMiddleware.class.getResource("/views/auth/login.fxml")));
-            Scene loginScene = new Scene(loginRoot);
-            primaryStage.setScene(loginScene);
-            primaryStage.setTitle("Login");
-            primaryStage.centerOnScreen();
-            primaryStage.show();
 
-        } catch (IOException e) {
-            System.err.println("Failed to load login.fxml.");
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            System.err.println("Error: login.fxml not found. Please check the file path.");
-            e.printStackTrace();
-        }
+        Helper.openWindow(primaryStage, "/views/auth/login.fxml", "Login");
     }
+
 }

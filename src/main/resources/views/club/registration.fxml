@@ -6,101 +6,164 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="537.0" prefWidth="845.0" styleClass="bg-white" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.auth.RegistrationController">
-    <children>
-        <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="537.0" prefWidth="845.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <items>
-                <Pane prefHeight="200.0" prefWidth="430.0" styleClass="bg-blue-950" />
-                <VBox prefHeight="200.0" prefWidth="100.0">
-                    <children>
-                        <HBox alignment="TOP_RIGHT" spacing="13.0">
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                            <children>
-                                <Button fx:id="btnMinimize" onAction="#handleMinimize" styleClass="window-button">
-                                    <graphic>
-                                        <FontAwesomeIconView glyphName="MINUS" />
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="btnClose" onAction="#handleClose" styleClass="window-button-close">
-                                    <graphic>
-                                        <FontAwesomeIconView glyphName="TIMES" />
-                                    </graphic>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <Pane prefHeight="114.0" prefWidth="378.0" styleClass="bg-transparent" />
-                        <VBox prefHeight="84.0" prefWidth="418.0">
-                            <children>
-                                <Label text="Username">
-                                    <styleClass>
-                                        <String fx:value="text-xl" />
-                                        <String fx:value="text-fill-black" />
-                                    </styleClass>
-                                </Label>
-                                <!-- Add the styleClass and promptText -->
-                                <TextField fx:id="usernameField" promptText="Enter your username">
-                                    <styleClass>
-                                        <String fx:value="styled-text-field" />
-                                    </styleClass>
-                                </TextField>
-                            </children>
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1080.0" styleClass="bg-slate-200" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.registration.RegistrationMemberController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox fx:id="topbar" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Form" HBox.hgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="text-3xl" />
+                        <String fx:value="font-bold" />
+                     </styleClass>
+                  </Text>
+                  <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="659.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </padding>
+                  </VBox>
+                  <HBox alignment="TOP_RIGHT" spacing="13.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <Button fx:id="btnMinimize" onAction="#handleMinimize" styleClass="window-button">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="MINUS" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnClose" onAction="#handleClose" styleClass="window-button-close">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="TIMES" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+             <HBox prefHeight="100.0" prefWidth="1020.0" VBox.vgrow="ALWAYS">
+                 <styleClass>
+                     <String fx:value="bg-rounded-2xl" />
+                     <String fx:value="bg-white" />
+                 </styleClass>
+                 <children>
+                     <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label styleClass="text-base" text="NIM" />
+                              <TextField promptText="Enter NIM" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
                         </VBox>
-
-                        <VBox layoutX="10.0" layoutY="193.0" prefHeight="84.0" prefWidth="418.0">
-                            <children>
-                                <Label text="Password">
-                                    <styleClass>
-                                        <String fx:value="text-xl" />
-                                        <String fx:value="text-fill-black" />
-                                    </styleClass>
-                                </Label>
-                                <!-- Add the styleClass and promptText -->
-                                <PasswordField fx:id="passwordField" promptText="Enter your password">
-                                    <styleClass>
-                                        <String fx:value="styled-text-field" />
-                                    </styleClass>
-                                </PasswordField>
-                            </children>
+                        <VBox layoutX="10.0" layoutY="10.0" spacing="10.0">
+                           <children>
+                              <Label styleClass="text-base" text="Name" />
+                              <TextField promptText="Enter Full Name" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                         <VBox layoutX="10.0" layoutY="111.0" spacing="10.0">
+                             <children>
+                                 <Label styleClass="text-base" text="Birth Date" />
+                                 <DatePicker maxWidth="Infinity" promptText="Enter Birth Date" VBox.vgrow="ALWAYS" />
+                             </children>
+                             <padding>
+                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                             </padding>
+                         </VBox>
+                         <VBox layoutX="10.0" layoutY="212.0" spacing="10.0">
+                           <children>
+                              <Label styleClass="text-base" text="Address" />
+                              <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Enter Address" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children></VBox>
+                     <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label styleClass="text-base" text="Motivation to join" />
+                              <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Tell us why you interested" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
                         </VBox>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
-                            <buttons>
-                                <Button fx:id="btnSignUp" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogin" text="Sign Up">
-                                    <styleClass>
-                                        <String fx:value="bg-blue-600" />
-                                        <String fx:value="text-fill-white" />
-                                        <String fx:value="font-bold" />
-                                    </styleClass>
-                                </Button>
-                        <Button fx:id="btnLogin" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogin" text="Login">
-                           <styleClass>
-                              <String fx:value="bg-blue-950" />
-                              <String fx:value="text-fill-white" />
-                              <String fx:value="font-bold" />
-                           </styleClass>
-                        </Button>
-                            </buttons>
+                          <buttons>
+                              <Button layoutX="426.0" layoutY="12.0" mnemonicParsing="false" text="Submit">
+                                 <styleClass>
+                                    <String fx:value="bg-yellow-400" />
+                                    <String fx:value="font-bold" />
+                                    <String fx:value="text-fill-white" />
+                                 </styleClass>
+                              </Button>
+                              <Button layoutX="396.0" layoutY="10.0" mnemonicParsing="false" text="Submit">
+                                 <styleClass>
+                                    <String fx:value="bg-sky-600" />
+                                    <String fx:value="font-bold" />
+                                    <String fx:value="text-fill-white" />
+                                 </styleClass>
+                              </Button>
+                          </buttons>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
                         </ButtonBar>
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                    </padding>
-                </VBox>
-            </items>
-        </SplitPane>
-    </children>
-    <stylesheets>
-        <URL value="@../style/custom-style.css" />
-        <URL value="@../style/tailwind-utilities.css" />
-    </stylesheets>
+                        <Region prefHeight="200.0" prefWidth="200.0" />
+                        <ButtonBar layoutX="10.0" layoutY="275.0" prefHeight="40.0" prefWidth="200.0">
+                           <buttons>
+                              <Button mnemonicParsing="false" onAction="#openLoginWindow" text="Back to Login Page">
+                                 <styleClass>
+                                    <String fx:value="bg-blue-800" />
+                                    <String fx:value="text-fill-white" />
+                                    <String fx:value="font-bold" />
+                                 </styleClass>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="SIGN_IN" size="20" />
+                                 </graphic>
+                              </Button>
+                           </buttons>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </ButtonBar>
+                     </children></VBox>
+                 </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+             </HBox>
+         </children>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../style/custom-style.css" />
+      <URL value="@../style/tailwind-utilities.css" />
+   </stylesheets>
+   <padding>
+      <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
+   </padding>
 </AnchorPane>

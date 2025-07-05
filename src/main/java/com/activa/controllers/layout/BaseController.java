@@ -1,5 +1,6 @@
 package com.activa.controllers.layout;
 
+import com.activa.App;
 import com.activa.utils.SessionManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -8,9 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -128,5 +133,71 @@ public class BaseController {
     void handleMinimize(ActionEvent event) {
         Stage stage = (Stage) btnMinimize.getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    /**
+     * Replaces the current content of the contentPane with the given node,
+     * and ensures it fills the StackPane completely.
+     *
+     * @param node the UI component to display
+     */
+    public void setContent(Node node) {
+        StackPane.setAlignment(node, javafx.geometry.Pos.CENTER);
+        StackPane.setMargin(node, javafx.geometry.Insets.EMPTY);
+
+        if (node instanceof Region) {
+            Region region = (Region) node;
+
+            region.prefWidthProperty().bind(contentPane.widthProperty());
+            region.prefHeightProperty().bind(contentPane.heightProperty());
+            region.maxWidthProperty().bind(contentPane.widthProperty());
+            region.maxHeightProperty().bind(contentPane.heightProperty());
+
+            region.setMinSize(0, 0);
+        }
+        if (node instanceof AnchorPane) {
+            AnchorPane.setTopAnchor(node, 0.0);
+            AnchorPane.setBottomAnchor(node, 0.0);
+            AnchorPane.setLeftAnchor(node, 0.0);
+            AnchorPane.setRightAnchor(node, 0.0);
+        }
+
+        contentPane.getChildren().setAll(node);
+    }
+
+    /**
+     * Loads an FXML file from the given path and returns its root node.
+     *
+     * @param viewPath the path to the FXML file (e.g., "/views/dashboard/index.fxml")
+     * @return the root node loaded from the FXML
+     * @throws IOException if the FXML cannot be loaded
+     */
+    public Parent getView(String viewPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource(viewPath));
+        return loader.load();
+    }
+
+    /**
+     * Sets the dashboard view as the current content.
+     */
+    public void setDashboardContent() throws IOException {
+        Parent view = getView("/views/dashboard/index.fxml");
+        setContent(view);
+    }
+
+    /**
+     * Sets the member list view as the current content.
+     */
+    public void setMemberListContent() throws IOException {
+        Parent view = getView("/views/club/member_list.fxml");
+        setContent(view);
+    }
+
+    /**
+     * Sets the request list view as the current content.
+     */
+    public void setRequestListContent() throws IOException {
+        Parent view = getView("/views/club/request_list.fxml");
+        setContent(view);
     }
 }

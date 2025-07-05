@@ -13,7 +13,7 @@ public class MemberRequest {
     }
 
     private UUID id;
-    private UUID memberId;
+    private Member member;
     private RequestStatus status;
     private String note;
     private LocalDateTime createdAt;
@@ -24,16 +24,16 @@ public class MemberRequest {
      * Full constructor for creating an instance from database data.
      *
      * @param id        The unique identifier of the request.
-     * @param memberId  The ID of the member this request pertains to.
+     * @param member  The ID of the member this request pertains to.
      * @param status    The current status of the request.
      * @param note      An optional note associated with the request.
      * @param createdAt The timestamp when the request was created.
      * @param updatedAt The timestamp when the request was last updated.
      * @param deletedAt The timestamp when the request was soft-deleted.
      */
-    public MemberRequest(UUID id, UUID memberId, RequestStatus status, String note, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public MemberRequest(UUID id, Member member, RequestStatus status, String note, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
-        this.memberId = memberId;
+        this.member = member;
         this.status = status;
         this.note = note;
         this.createdAt = createdAt;
@@ -45,12 +45,12 @@ public class MemberRequest {
      * Simplified constructor for creating a new request.
      * Timestamps are typically handled by the database.
      *
-     * @param memberId The ID of the member for whom the request is being made.
+     * @param member The ID of the member for whom the request is being made.
      * @param note     An initial note for the request.
      */
-    public MemberRequest(UUID memberId, String note) {
+    public MemberRequest(Member member, String note) {
         this.id = UUID.randomUUID();
-        this.memberId = memberId;
+        this.member = member;
         this.note = note;
         this.status = RequestStatus.PENDING;
     }
@@ -58,8 +58,8 @@ public class MemberRequest {
     public UUID getId() {return id;}
     public void setId(UUID id) {this.id = id;}
 
-    public UUID getMemberId() {return memberId;}
-    public void setMemberId(UUID memberId) {this.memberId = memberId;}
+    public Member getMember() {return member;}
+    public void setMember(Member member) {this.member = member;}
 
     public RequestStatus getStatus() {return status;}
     public void setStatus(RequestStatus status) {this.status = status;}
