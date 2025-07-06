@@ -81,6 +81,9 @@
                               <String fx:value="text-fill-white" />
                               <String fx:value="font-bold" />
                            </styleClass>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" size="15" />
+                           </graphic>
                         </Button>
                         <Button fx:id="btnLogin" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogin" text="Login">
                            <styleClass>
@@ -88,6 +91,9 @@
                               <String fx:value="text-fill-white" />
                               <String fx:value="font-bold" />
                            </styleClass>
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="SIGN_IN" size="15" />
+                           </graphic>
                         </Button>
                     </buttons>
                   </ButtonBar>
