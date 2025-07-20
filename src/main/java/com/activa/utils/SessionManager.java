@@ -61,6 +61,7 @@ public class SessionManager {
 
     /**
      * Safely closes the database connection if it's open.
+     * This should typically be called when the application is shutting down.
      */
     public void closeConnection() {
         try {
@@ -75,12 +76,12 @@ public class SessionManager {
     }
 
     /**
-     * Clears all session data and closes the database connection.
-     * Effectively logs the user out and resets the session state.
+     * PERBAIKAN: Hanya membersihkan data pengguna (currentUser) dari sesi.
+     * Koneksi database tetap dibiarkan terbuka untuk digunakan kembali.
+     * Efektif untuk me-logout pengguna.
      */
     public void clearSession() {
         this.currentUser = null;
-        closeConnection();
+        // Pemanggilan closeConnection() telah dihapus dari sini.
     }
 }
-

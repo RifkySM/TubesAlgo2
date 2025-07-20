@@ -11,7 +11,7 @@
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to ACTIVA" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Member List Page">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Announcement List Page">
                     <styleClass>
                         <String fx:value="text-3xl" />
                         <String fx:value="font-bold" />

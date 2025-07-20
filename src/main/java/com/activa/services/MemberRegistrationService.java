@@ -29,8 +29,9 @@ public class MemberRegistrationService {
      * @param address   The new member's address.
      * @return The newly created Member object.
      */
-    public Member registerNewMember(String nim, String name, LocalDate birthdate, String address, String requestNote) {
-        Member newMember = new Member(nim, name, birthdate, address);
+    public Member registerNewMember(String nim, String name, String email, LocalDate birthdate, String address, String requestNote) {
+        Member newMember = new Member(nim, name, email, birthdate, address);
+
         newMember.setActive(false);
 
         memberRepository.create(newMember);

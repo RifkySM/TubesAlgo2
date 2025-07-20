@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -36,6 +37,19 @@ public class LoginController {
     private void initialize() {
         this.loginService = new LoginService();
         setupDraggableWindow();
+
+        // PERBAIKAN: Menambahkan listener untuk tombol Enter pada kedua field.
+        usernameField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                submitLogin();
+            }
+        });
+
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                submitLogin();
+            }
+        });
     }
 
     private void setupDraggableWindow() {
@@ -58,7 +72,6 @@ public class LoginController {
         topbar.setOnMouseEntered(event -> {
             topbar.setCursor(Cursor.HAND);
         });
-
     }
 
     @FXML
@@ -74,11 +87,17 @@ public class LoginController {
     }
 
     /**
-     * Handles the login button action. It validates credentials using the
-     * LoginService and navigates to the main dashboard on success.
+     * Menangani aksi tombol login. Metode ini sekarang hanya memanggil submitLogin().
      */
     @FXML
     void handleLogin(ActionEvent event) {
+        submitLogin();
+    }
+
+    /**
+     * Logika inti untuk memproses login. Dipanggil oleh tombol login dan tombol Enter.
+     */
+    private void submitLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -100,7 +119,7 @@ public class LoginController {
     }
 
     /**
-     * Opens the main application window (Dashboard).
+     * Membuka jendela utama aplikasi (Dashboard).
      */
     private void openDashboardWindow() {
         try {
@@ -110,7 +129,7 @@ public class LoginController {
             Stage dashboardStage = new Stage();
             dashboardStage.setTitle("Activa - Dashboard");
             dashboardStage.setScene(new Scene(dashboardRoot));
-
+            dashboardStage.setMaximized(true);
             dashboardStage.initStyle(StageStyle.UNDECORATED);
             dashboardStage.show();
         } catch (IOException e) {
@@ -140,12 +159,12 @@ public class LoginController {
     }
 
     /**
-     * Closes the current login stage.
+     * Menutup stage login saat ini.
      */
     private void closeCurrentStage() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         if (stage != null) {
-        stage.close();
+            stage.close();
         }
     }
 }
