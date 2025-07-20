@@ -37,10 +37,8 @@ public class MemberRepository {
                 rs.getString("nim"),
                 rs.getString("name"),
                 rs.getString("email"),
-                // SQLite stores DATE as TEXT, so we parse it.
                 rs.getString("birth_date") != null ? LocalDate.parse(rs.getString("birth_date")) : null,
                 rs.getString("address"),
-                // SQLite stores BOOLEAN as INTEGER (0 or 1).
                 rs.getInt("is_active") == 1,
                 rs.getTimestamp("joined_at") != null ? rs.getTimestamp("joined_at").toLocalDateTime() : null,
                 rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null,
@@ -91,6 +89,27 @@ public class MemberRepository {
         } catch (SQLException e) {
             System.err.println("Error finding member by ID: " + e.getMessage());
             throw new RuntimeException("Database error while fetching member by ID.", e);
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Finds a member by their associated user_id.
+     * @param userId The UUID of the user.
+     * @return An Optional containing the Member if found, otherwise empty.
+     */
+    public Optional<Member> findByUserId(UUID userId) {
+        String sql = "SELECT * FROM members WHERE user_id = ? AND deleted_at IS NULL";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, userId.toString());
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSetToMember(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding member by User ID: " + e.getMessage());
+            throw new RuntimeException("Database error while fetching member by User ID.", e);
         }
         return Optional.empty();
     }
