@@ -9,47 +9,43 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="rootPane" minHeight="720.0" minWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.layout.BaseController">
+<BorderPane fx:id="rootPane" minHeight="720.0" minWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.layout.BaseController">
     <stylesheets>
         <URL value="@../style/custom-style.css" />
         <URL value="@../style/tailwind-utilities.css" />
     </stylesheets>
-   <children>
-      <BorderPane layoutY="-4.0" prefHeight="276.0" prefWidth="407.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <StackPane fx:id="contentPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </center>
-         <top>
-            <AnchorPane prefHeight="53.0" prefWidth="1080.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox spacing="13.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <padding>
+    <center>
+        <StackPane fx:id="contentPane" BorderPane.alignment="CENTER" />
+    </center>
+    <top>
+        <AnchorPane styleClass="bg-white" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER_RIGHT" spacing="13.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                    <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <children>
-                         <Button fx:id="btnMinimize" styleClass="window-button" onAction="#handleMinimize">
-                           <graphic>
-                              <FontAwesomeIconView glyphName="MINUS" />
-                           </graphic></Button>
-
-                         <Button fx:id="btnMaximize" styleClass="window-button" onAction="#handleMaximize">
-                           <graphic>
-                              <FontAwesomeIconView glyphName="EXPAND" selectionEnd="0" />
-                           </graphic></Button>
-
-                         <Button fx:id="btnClose" styleClass="window-button-close" onAction="#handleClose">
-                           <graphic>
-                              <FontAwesomeIconView glyphName="TIMES" />
-                           </graphic>
-                          </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-         </top>
-          <left>
-              <AnchorPane fx:id="sidebar" />
-          </left>
-      </BorderPane>
-   </children>
-</AnchorPane>
+                    </padding>
+                    <children>
+                        <Button fx:id="btnMinimize" onAction="#handleMinimize" styleClass="window-button">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="MINUS" />
+                            </graphic>
+                        </Button>
+<!--                        <Button fx:id="btnMaximize" onAction="#handleMaximize" styleClass="window-button">-->
+<!--                            <graphic>-->
+<!--                                <FontAwesomeIconView glyphName="EXPAND" />-->
+<!--                            </graphic>-->
+<!--                        </Button>-->
+                        <Button fx:id="btnClose" onAction="#handleClose" styleClass="window-button-close">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="TIMES" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </top>
+    <left>
+        <AnchorPane fx:id="sidebar" />
+    </left>
+</BorderPane>

@@ -12,17 +12,21 @@ import javafx.stage.StageStyle;
 public class App extends Application {
     @Override
     public void start(Stage stage) {
+        System.out.println("Starting Application...");
+        System.out.println(Helper.hashPassword("password"));
         SessionManager.getInstance().setDatabaseConnection(DatabaseUtil.getConnection());
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+        stage.initStyle(StageStyle.UNDECORATED);
 
         AuthMiddleware.setPrimaryStage(stage);
 
-        stage.initStyle(StageStyle.UNDECORATED);
-        Helper.openWindow(stage, "/views/layout/base.fxml", "Dashboard");
-
-        AuthMiddleware.checkAuth();
+        if (SessionManager.getInstance().isLoggedIn()) {
+            stage.setMaximized(true);
+            Helper.openWindow(stage, "/views/layout/base.fxml", "Dashboard");
+        } else {
+            AuthMiddleware.redirectToLogin();
+        }
     }
-
 
     public static void main(String[] args) {
         launch();

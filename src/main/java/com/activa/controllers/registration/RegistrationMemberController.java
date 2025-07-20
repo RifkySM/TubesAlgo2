@@ -8,8 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -22,6 +21,13 @@ public class RegistrationMemberController {
     @FXML private Button btnMinimize;
     @FXML private AnchorPane rootPane;
     @FXML private HBox topbar;
+
+    @FXML private TextArea inputAddress;
+    @FXML private DatePicker inputBirthDate;
+    @FXML private TextField inputEmail;
+    @FXML private TextField inputNIM;
+    @FXML private TextField inputName;
+    @FXML private TextArea inputNote;
 
     private double xOffset = 0;
     private double yOffset = 0;

@@ -16,16 +16,9 @@ public class UserRepository {
         this.connection = SessionManager.getInstance().getDatabaseConnection();
     }
 
-    /**
-     * Maps a row from a ResultSet to a User object.
-     * This method fetches the associated Role using the RoleRepository.
-     * @param rs The ResultSet to map from.
-     * @return A new User object.
-     * @throws SQLException if a database access error occurs.
-     */
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         return new User(
-                rs.getObject("id", UUID.class),
+                UUID.fromString(rs.getString("id")),
                 rs.getString("role"),
                 rs.getString("name"),
                 rs.getString("username"),
@@ -36,15 +29,15 @@ public class UserRepository {
         );
     }
 
-
     public void create(User user) {
-        String sql = "INSERT INTO users (id, role_id, name, username, password) VALUES (?, ?, ?, ?, ?)";
+        // SQLite doesn't need type casting for role
+        String sql = "INSERT INTO users (id, role, name, username, password) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, user.getId());
-            pstmt.setObject(2, user.getRole());
+            pstmt.setString(1, user.getId().toString());
+            pstmt.setString(2, user.getRole());
             pstmt.setString(3, user.getName());
             pstmt.setString(4, user.getUsername());
-            pstmt.setString(5, user.getPassword()); // Assumes password is already hashed
+            pstmt.setString(5, user.getPassword());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error creating user: " + e.getMessage());
@@ -70,7 +63,7 @@ public class UserRepository {
     public Optional<User> findById(UUID id) {
         String sql = "SELECT * FROM users WHERE id = ? AND deleted_at IS NULL";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, id);
+            pstmt.setString(1, id.toString());
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapResultSetToUser(rs));
@@ -100,12 +93,13 @@ public class UserRepository {
     }
 
     public void update(User user) {
-        String sql = "UPDATE users SET role_id = ?, name = ?, username = ?, updated_at = NOW() WHERE id = ?";
+        // SQLite version without type casting and using datetime('now')
+        String sql = "UPDATE users SET role = ?, name = ?, username = ?, updated_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, user.getRole());
+            pstmt.setString(1, user.getRole());
             pstmt.setString(2, user.getName());
             pstmt.setString(3, user.getUsername());
-            pstmt.setObject(4, user.getId());
+            pstmt.setString(4, user.getId().toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error updating user: " + e.getMessage());
@@ -114,10 +108,10 @@ public class UserRepository {
     }
 
     public void updatePassword(UUID userId, String newHashedPassword) {
-        String sql = "UPDATE users SET password = ?, updated_at = NOW() WHERE id = ?";
+        String sql = "UPDATE users SET password = ?, updated_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, newHashedPassword);
-            pstmt.setObject(2, userId);
+            pstmt.setString(2, userId.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error updating password: " + e.getMessage());
@@ -126,9 +120,9 @@ public class UserRepository {
     }
 
     public void softDeleteById(UUID id) {
-        String sql = "UPDATE users SET deleted_at = NOW() WHERE id = ?";
+        String sql = "UPDATE users SET deleted_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, id);
+            pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error soft-deleting user: " + e.getMessage());
@@ -139,7 +133,7 @@ public class UserRepository {
     public void hardDeleteById(UUID id) {
         String sql = "DELETE FROM users WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, id);
+            pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error hard-deleting user: " + e.getMessage());

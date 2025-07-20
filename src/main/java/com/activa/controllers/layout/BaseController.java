@@ -10,11 +10,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -24,13 +26,14 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class BaseController {
     @FXML private Button btnClose;
     @FXML private Button btnMaximize;
     @FXML private Button btnMinimize;
     @FXML private StackPane contentPane;
-    @FXML private AnchorPane rootPane;
+    @FXML private BorderPane rootPane;
     @FXML private AnchorPane sidebar;
 
     private double xOffset = 0;
@@ -41,7 +44,7 @@ public class BaseController {
     private static final double EXPANDED_WIDTH = 180.0;
     private static final double COLLAPSED_WIDTH = 60.0;
 
-    private SessionManager sessionManager = SessionManager.getInstance();
+    private final SessionManager sessionManager = SessionManager.getInstance();
 
     private SidebarController sidebarController;
 
@@ -54,7 +57,8 @@ public class BaseController {
             sidebarController = loader.getController();
             sidebarController.setBaseController(this);
 
-            sidebarVBox.setPrefWidth(EXPANDED_WIDTH);
+            sidebar.setPrefWidth(EXPANDED_WIDTH);
+
             sidebar.getChildren().setAll(sidebarVBox);
             AnchorPane.setTopAnchor(sidebarVBox, 0.0);
             AnchorPane.setBottomAnchor(sidebarVBox, 0.0);
@@ -68,12 +72,22 @@ public class BaseController {
         setupDraggableWindow();
 
         rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
                 Stage stage = (Stage) newScene.getWindow();
-            if (stage != null) {
-                toggleSidebar(!stage.isMaximized());
-                stage.maximizedProperty().addListener((maxObs, wasMaximized, isNowMaximized) -> {
-                    toggleSidebar(!isNowMaximized);
-                });
+                if (stage != null) {
+                    // PERBAIKAN: Listener sekarang lebih eksplisit.
+                    // Saat maximize, sidebar menyempit.
+                    // Saat restore (tidak lagi maximized), sidebar melebar.
+                    stage.maximizedProperty().addListener((maxObs, wasMaximized, isNowMaximized) -> {
+                        if (isNowMaximized) {
+                            toggleSidebar(false); // Sempitkan saat maximize
+                        } else {
+                            toggleSidebar(true); // Lebarkan saat restore
+                        }
+                    });
+                    // Atur keadaan awal saat aplikasi pertama kali dimuat
+                    toggleSidebar(!stage.isMaximized());
+                }
             }
         });
     }
@@ -86,7 +100,7 @@ public class BaseController {
         double targetWidth = expand ? EXPANDED_WIDTH : COLLAPSED_WIDTH;
 
         Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(sidebarVBox.prefWidthProperty(), targetWidth);
+        KeyValue kv = new KeyValue(sidebar.prefWidthProperty(), targetWidth);
         KeyFrame kf = new KeyFrame(Duration.millis(300), kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
@@ -105,16 +119,21 @@ public class BaseController {
     }
 
     private void setupDraggableWindow() {
-        rootPane.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
+        Node topBar = rootPane.getTop();
+        if (topBar != null) {
+            topBar.setOnMousePressed(event -> {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            });
 
-        rootPane.setOnMouseDragged(event -> {
-            Stage stage = (Stage) rootPane.getScene().getWindow();
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
-        });
+            topBar.setOnMouseDragged(event -> {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                if (!stage.isMaximized()) {
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
+                }
+            });
+        }
     }
 
     @FXML
@@ -135,69 +154,87 @@ public class BaseController {
         stage.setIconified(true);
     }
 
-    /**
-     * Replaces the current content of the contentPane with the given node,
-     * and ensures it fills the StackPane completely.
-     *
-     * @param node the UI component to display
-     */
     public void setContent(Node node) {
-        StackPane.setAlignment(node, javafx.geometry.Pos.CENTER);
-        StackPane.setMargin(node, javafx.geometry.Insets.EMPTY);
-
         if (node instanceof Region) {
             Region region = (Region) node;
-
-            region.prefWidthProperty().bind(contentPane.widthProperty());
-            region.prefHeightProperty().bind(contentPane.heightProperty());
-            region.maxWidthProperty().bind(contentPane.widthProperty());
-            region.maxHeightProperty().bind(contentPane.heightProperty());
-
-            region.setMinSize(0, 0);
+            region.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }
-        if (node instanceof AnchorPane) {
-            AnchorPane.setTopAnchor(node, 0.0);
-            AnchorPane.setBottomAnchor(node, 0.0);
-            AnchorPane.setLeftAnchor(node, 0.0);
-            AnchorPane.setRightAnchor(node, 0.0);
-        }
-
         contentPane.getChildren().setAll(node);
     }
 
-    /**
-     * Loads an FXML file from the given path and returns its root node.
-     *
-     * @param viewPath the path to the FXML file (e.g., "/views/dashboard/index.fxml")
-     * @return the root node loaded from the FXML
-     * @throws IOException if the FXML cannot be loaded
-     */
     public Parent getView(String viewPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource(viewPath));
         return loader.load();
     }
 
-    /**
-     * Sets the dashboard view as the current content.
-     */
     public void setDashboardContent() throws IOException {
         Parent view = getView("/views/dashboard/index.fxml");
         setContent(view);
     }
 
-    /**
-     * Sets the member list view as the current content.
-     */
     public void setMemberListContent() throws IOException {
         Parent view = getView("/views/club/member_list.fxml");
         setContent(view);
     }
 
-    /**
-     * Sets the request list view as the current content.
-     */
     public void setRequestListContent() throws IOException {
         Parent view = getView("/views/club/request_list.fxml");
         setContent(view);
+    }
+
+    public void setActivityListContent() throws IOException {
+        Parent view = getView("/views/activity/index.fxml");
+        setContent(view);
+    }
+
+    public void setAnnouncementListContent() throws IOException {
+        Parent view = getView("/views/announcement/index.fxml");
+        setContent(view);
+    }
+
+    public void setAttendanceContent() throws IOException {
+        Parent view = getView("/views/attendance/index.fxml");
+        setContent(view);
+    }
+
+    public void setUserListContent() throws IOException {
+        Parent view = getView("/views/user/index.fxml");
+        setContent(view);
+    }
+
+    public void setReportContent() throws IOException {
+        Parent view = getView("/views/report/index.fxml");
+        setContent(view);
+    }
+
+    public void handleLogout() {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Konfirmasi Logout");
+        confirmation.setHeaderText("Anda yakin ingin logout?");
+        confirmation.setContentText("Sesi Anda akan berakhir dan Anda akan kembali ke halaman login.");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                sessionManager.clearSession();
+
+                Stage currentStage = (Stage) rootPane.getScene().getWindow();
+                Parent loginRoot = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("/views/auth/login.fxml")));
+                Scene loginScene = new Scene(loginRoot);
+
+                currentStage.setScene(loginScene);
+                currentStage.setTitle("Activa - Login");
+                currentStage.centerOnScreen();
+
+            } catch (IOException | NullPointerException e) {
+                System.err.println("Gagal memuat tampilan login: /views/auth/login.fxml");
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Logout Gagal");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Tidak dapat memuat layar login.");
+                errorAlert.showAndWait();
+            }
+        }
     }
 }

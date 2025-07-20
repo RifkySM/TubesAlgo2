@@ -2,7 +2,7 @@ package com.activa.repositories;
 
 import com.activa.models.Member;
 import com.activa.models.MemberRequest;
-import com.activa.utils.SessionManager; // Assuming SessionManager is in this package
+import com.activa.utils.SessionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Handles all database operations for MemberRequest entities.
+ * Handles all database operations for MemberRequest entities, adjusted for SQLite.
  */
 public class MemberRequestRepository {
 
@@ -31,13 +31,14 @@ public class MemberRequestRepository {
      * @throws SQLException if a database access error occurs.
      */
     private MemberRequest mapResultSetToMemberRequest(ResultSet rs) throws SQLException {
-        UUID memberId = rs.getObject("member_id", UUID.class);
+        // SQLite adjustment: Handle UUIDs as Strings
+        UUID memberId = UUID.fromString(rs.getString("member_id"));
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalStateException("Data integrity error: Request found for non-existent member ID: " + memberId));
 
         return new MemberRequest(
-                rs.getObject("id", UUID.class),
+                UUID.fromString(rs.getString("id")),
                 member,
                 MemberRequest.RequestStatus.valueOf(rs.getString("status")),
                 rs.getString("note"),
@@ -53,10 +54,11 @@ public class MemberRequestRepository {
      * @param request The MemberRequest object to save.
      */
     public void create(MemberRequest request) {
-        String sql = "INSERT INTO requests (id, member_id, status, note) VALUES (?, ?, ?, ?)";
+        // SQLite adjustment: Set timestamps on creation
+        String sql = "INSERT INTO requests (id, member_id, status, note, created_at, updated_at) VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, request.getId());
-            pstmt.setObject(2, request.getMember().getId());
+            pstmt.setString(1, request.getId().toString());
+            pstmt.setString(2, request.getMember().getId().toString());
             pstmt.setString(3, request.getStatus().name());
             pstmt.setString(4, request.getNote());
             pstmt.executeUpdate();
@@ -76,7 +78,7 @@ public class MemberRequestRepository {
     public Optional<MemberRequest> findById(UUID id) {
         String sql = "SELECT * FROM requests WHERE id = ? AND deleted_at IS NULL";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, id);
+            pstmt.setString(1, id.toString());
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapResultSetToMemberRequest(rs));
@@ -140,11 +142,12 @@ public class MemberRequestRepository {
      * @param newNote   The new note to set.
      */
     public void update(UUID requestId, MemberRequest.RequestStatus newStatus, String newNote) {
-        String sql = "UPDATE requests SET status = ?, note = ?, updated_at = NOW() WHERE id = ?";
+        // SQLite adjustment: Use datetime('now')
+        String sql = "UPDATE requests SET status = ?, note = ?, updated_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, newStatus.name());
             pstmt.setString(2, newNote);
-            pstmt.setObject(3, requestId);
+            pstmt.setString(3, requestId.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error updating request: " + e.getMessage());
@@ -159,9 +162,10 @@ public class MemberRequestRepository {
      * @param id The UUID of the request to soft-delete.
      */
     public void softDeleteById(UUID id) {
-        String sql = "UPDATE requests SET deleted_at = NOW() WHERE id = ?";
+        // SQLite adjustment: Use datetime('now')
+        String sql = "UPDATE requests SET deleted_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, id);
+            pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error soft-deleting request: " + e.getMessage());
@@ -177,7 +181,7 @@ public class MemberRequestRepository {
     public void hardDeleteById(UUID id) {
         String sql = "DELETE FROM requests WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setObject(1, id);
+            pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error hard-deleting request: " + e.getMessage());

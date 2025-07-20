@@ -11,7 +11,11 @@ module com.activa {
 
     exports com.activa;
     exports com.activa.controllers.auth;
+    exports com.activa.controllers.attendance;
     exports com.activa.controllers.layout;
+    exports com.activa.controllers.user;
+    exports com.activa.controllers.report;
+    exports com.activa.controllers.activity;
     exports com.activa.middlewares;
     exports com.activa.models;
     exports com.activa.repositories;
@@ -20,7 +24,11 @@ module com.activa {
 
     opens com.activa to javafx.fxml;
     opens com.activa.controllers.layout to javafx.fxml;
+    opens com.activa.controllers.report to javafx.fxml;
     opens com.activa.controllers.auth to javafx.fxml;
+    opens com.activa.controllers.activity to javafx.fxml;
+    opens com.activa.controllers.attendance to javafx.fxml;
+    opens com.activa.controllers.user to javafx.fxml;
     opens com.activa.controllers.registration to javafx.fxml;
     opens com.activa.middlewares to javafx.fxml;
     opens com.activa.models to javafx.fxml;
