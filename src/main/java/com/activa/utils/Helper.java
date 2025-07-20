@@ -5,10 +5,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Helper {
     /**
@@ -83,5 +85,22 @@ public class Helper {
             e.printStackTrace();
         }
     }
+    /**
+     * Displays a confirmation dialog with a specified title and message.
+     * <p>
+     * This dialog shows "OK" and "Cancel" buttons and waits for the user's response.
+     *
+     * @param title   The text for the dialog's title bar.
+     * @param message The main content message for the user.
+     * @return {@code true} if the user clicks the "OK" button, {@code false} otherwise.
+     */
+    public static boolean showConfirmation(String title, String message) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
 
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
 }
