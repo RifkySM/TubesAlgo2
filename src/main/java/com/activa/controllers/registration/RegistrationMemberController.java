@@ -95,6 +95,10 @@ public class RegistrationMemberController {
         }
     }
 
+    @FXML
+    private void handleRegister(ActionEvent event) {
+    }
+
     private void closeCurrentStage() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         if (stage != null) {
