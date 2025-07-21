@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" styleClass="bg-slate-200" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.club.approval.ApprovalController">
+    <children>
+        <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <styleClass>
+                <String fx:value="bg-white" />
+                <String fx:value="bg-rounded-3xl" />
+            </styleClass>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <VBox>
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Membership Approval">
+                            <styleClass>
+                                <String fx:value="text-3xl" />
+                                <String fx:value="font-bold" />
+                            </styleClass>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Page to approve or reject new member requests" />
+                    </children>
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="200.0">
+                    <children>
+                        <TextField fx:id="searchField" promptText="Search by Name or NIM..." />
+                    </children>
+                </HBox>
+                <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <TableView fx:id="tableView" HBox.hgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Name" />
+                                <TableColumn fx:id="nimColumn" prefWidth="150.0" text="NIM" />
+                                <TableColumn fx:id="requestDateColumn" prefWidth="150.0" text="Request Date" />
+                                <TableColumn fx:id="statusColumn" prefWidth="120.0" text="Status" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <VBox prefWidth="300.0" spacing="10.0">
+                            <children>
+                                <Label styleClass="font-bold" text="Request Details" />
+                                <VBox fx:id="detailsPane" spacing="5.0" styleClass="p-4, bg-slate-100, bg-rounded-lg">
+                                    <children>
+                                        <Text fx:id="detailNameText" text="Name: -" />
+                                        <Text fx:id="detailNimText" text="NIM: -" />
+                                        <Text fx:id="detailEmailText" text="Email: -" />
+                                        <Text fx:id="detailAddressText" text="Address: -" />
+                                        <Text fx:id="detailMotivationText" text="Motivation: -" />
+                                    </children>
+                                </VBox>
+                                <Label styleClass="font-bold" text="Action Note" />
+                                <TextArea fx:id="notesArea" prefHeight="100.0" promptText="Enter reason for approval or rejection..." wrapText="true" />
+                                <HBox alignment="CENTER" spacing="10.0">
+                                    <children>
+                                        <Button fx:id="btnApprove" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" text="Approve" />
+                                        <Button fx:id="btnReject" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" text="Reject" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../../style/custom-style.css" />
+        <URL value="@../../style/tailwind-utilities.css" />
+    </stylesheets>
+    <padding>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+    </padding>
+</AnchorPane>

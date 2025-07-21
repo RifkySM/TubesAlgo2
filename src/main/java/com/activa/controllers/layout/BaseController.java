@@ -178,7 +178,7 @@ public class BaseController {
     }
 
     public void setRequestListContent() throws IOException {
-        Parent view = getView("/views/club/request_list.fxml");
+        Parent view = getView("/views/club/approval/index.fxml");
         setContent(view);
     }
 
