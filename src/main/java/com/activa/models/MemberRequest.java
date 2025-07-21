@@ -1,6 +1,7 @@
 package com.activa.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class MemberRequest {
@@ -16,26 +17,20 @@ public class MemberRequest {
     private Member member;
     private RequestStatus status;
     private String note;
+    private String motivation; // New field
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
     /**
      * Full constructor for creating an instance from database data.
-     *
-     * @param id        The unique identifier of the request.
-     * @param member  The ID of the member this request pertains to.
-     * @param status    The current status of the request.
-     * @param note      An optional note associated with the request.
-     * @param createdAt The timestamp when the request was created.
-     * @param updatedAt The timestamp when the request was last updated.
-     * @param deletedAt The timestamp when the request was soft-deleted.
      */
-    public MemberRequest(UUID id, Member member, RequestStatus status, String note, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public MemberRequest(UUID id, Member member, RequestStatus status, String note, String motivation, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.member = member;
         this.status = status;
         this.note = note;
+        this.motivation = motivation;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -43,18 +38,15 @@ public class MemberRequest {
 
     /**
      * Simplified constructor for creating a new request.
-     * Timestamps are typically handled by the database.
-     *
-     * @param member The ID of the member for whom the request is being made.
-     * @param note     An initial note for the request.
      */
-    public MemberRequest(Member member, String note) {
+    public MemberRequest(Member member, String motivation) {
         this.id = UUID.randomUUID();
         this.member = member;
-        this.note = note;
+        this.motivation = motivation;
         this.status = RequestStatus.PENDING;
     }
 
+    // --- Standard Getters and Setters ---
     public UUID getId() {return id;}
     public void setId(UUID id) {this.id = id;}
 
@@ -67,6 +59,9 @@ public class MemberRequest {
     public String getNote() {return note;}
     public void setNote(String note) {this.note = note;}
 
+    public String getMotivation() { return motivation; }
+    public void setMotivation(String motivation) { this.motivation = motivation; }
+
     public LocalDateTime getCreatedAt() {return createdAt;}
     public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
 
@@ -75,4 +70,18 @@ public class MemberRequest {
 
     public LocalDateTime getDeletedAt() {return deletedAt;}
     public void setDeletedAt(LocalDateTime deletedAt) {this.deletedAt = deletedAt;}
+
+    // --- PropertyValueFactory Getters for TableView ---
+
+    public String getMemberName() {
+        return member != null ? member.getName() : "N/A";
+    }
+
+    public String getNim() {
+        return member != null ? member.getNim() : "N/A";
+    }
+
+    public String getRequestDate() {
+        return createdAt != null ? createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "N/A";
+    }
 }

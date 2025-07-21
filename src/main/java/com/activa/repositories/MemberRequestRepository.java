@@ -27,25 +27,29 @@ public class MemberRequestRepository {
      * Maps a row from a ResultSet to a MemberRequest object.
      *
      * @param rs The ResultSet to map from.
-     * @return A new MemberRequest object.
+     * @return An Optional containing the MemberRequest if the associated member exists, otherwise empty.
      * @throws SQLException if a database access error occurs.
      */
-    private MemberRequest mapResultSetToMemberRequest(ResultSet rs) throws SQLException {
-        // SQLite adjustment: Handle UUIDs as Strings
+    private Optional<MemberRequest> mapResultSetToMemberRequest(ResultSet rs) throws SQLException {
         UUID memberId = UUID.fromString(rs.getString("member_id"));
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalStateException("Data integrity error: Request found for non-existent member ID: " + memberId));
+        Optional<Member> memberOpt = memberRepository.findById(memberId);
+        if (memberOpt.isEmpty()) {
+            System.err.println("Data integrity warning: Skipping request with ID " + rs.getString("id") + " because its associated member (ID: " + memberId + ") could not be found.");
+            return Optional.empty();
+        }
 
-        return new MemberRequest(
+        MemberRequest request = new MemberRequest(
                 UUID.fromString(rs.getString("id")),
-                member,
+                memberOpt.get(),
                 MemberRequest.RequestStatus.valueOf(rs.getString("status")),
                 rs.getString("note"),
+                rs.getString("motivation"),
                 rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null,
                 rs.getTimestamp("updated_at") != null ? rs.getTimestamp("updated_at").toLocalDateTime() : null,
                 rs.getTimestamp("deleted_at") != null ? rs.getTimestamp("deleted_at").toLocalDateTime() : null
         );
+        return Optional.of(request);
     }
 
     /**
@@ -54,13 +58,13 @@ public class MemberRequestRepository {
      * @param request The MemberRequest object to save.
      */
     public void create(MemberRequest request) {
-        // SQLite adjustment: Set timestamps on creation
-        String sql = "INSERT INTO requests (id, member_id, status, note, created_at, updated_at) VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))";
+        String sql = "INSERT INTO requests (id, member_id, status, note, motivation, created_at, updated_at) VALUES (?, ?, ?, ?, ?, datetime('now'), datetime('now'))";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, request.getId().toString());
             pstmt.setString(2, request.getMember().getId().toString());
             pstmt.setString(3, request.getStatus().name());
             pstmt.setString(4, request.getNote());
+            pstmt.setString(5, request.getMotivation()); // Set motivation
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error creating member request: " + e.getMessage());
@@ -81,7 +85,7 @@ public class MemberRequestRepository {
             pstmt.setString(1, id.toString());
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(mapResultSetToMemberRequest(rs));
+                    return mapResultSetToMemberRequest(rs);
                 }
             }
         } catch (SQLException e) {
@@ -102,7 +106,7 @@ public class MemberRequestRepository {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                requests.add(mapResultSetToMemberRequest(rs));
+                mapResultSetToMemberRequest(rs).ifPresent(requests::add);
             }
         } catch (SQLException e) {
             System.err.println("Error finding all requests: " + e.getMessage());
@@ -124,7 +128,7 @@ public class MemberRequestRepository {
             pstmt.setString(1, status.name());
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    requests.add(mapResultSetToMemberRequest(rs));
+                    mapResultSetToMemberRequest(rs).ifPresent(requests::add);
                 }
             }
         } catch (SQLException e) {
@@ -142,7 +146,6 @@ public class MemberRequestRepository {
      * @param newNote   The new note to set.
      */
     public void update(UUID requestId, MemberRequest.RequestStatus newStatus, String newNote) {
-        // SQLite adjustment: Use datetime('now')
         String sql = "UPDATE requests SET status = ?, note = ?, updated_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, newStatus.name());
@@ -162,7 +165,6 @@ public class MemberRequestRepository {
      * @param id The UUID of the request to soft-delete.
      */
     public void softDeleteById(UUID id) {
-        // SQLite adjustment: Use datetime('now')
         String sql = "UPDATE requests SET deleted_at = datetime('now') WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, id.toString());
