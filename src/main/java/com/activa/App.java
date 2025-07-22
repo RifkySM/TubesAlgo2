@@ -13,7 +13,6 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         System.out.println("Starting Application...");
-        System.out.println(Helper.hashPassword("password"));
         SessionManager.getInstance().setDatabaseConnection(DatabaseUtil.getConnection());
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         stage.initStyle(StageStyle.UNDECORATED);

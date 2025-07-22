@@ -65,6 +65,7 @@ public class BaseController {
             AnchorPane.setLeftAnchor(sidebarVBox, 0.0);
             AnchorPane.setRightAnchor(sidebarVBox, 0.0);
 
+            setDashboardContent();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,17 +76,14 @@ public class BaseController {
             if (newScene != null) {
                 Stage stage = (Stage) newScene.getWindow();
                 if (stage != null) {
-                    // PERBAIKAN: Listener sekarang lebih eksplisit.
-                    // Saat maximize, sidebar menyempit.
-                    // Saat restore (tidak lagi maximized), sidebar melebar.
+
                     stage.maximizedProperty().addListener((maxObs, wasMaximized, isNowMaximized) -> {
                         if (isNowMaximized) {
-                            toggleSidebar(false); // Sempitkan saat maximize
+                            toggleSidebar(false);
                         } else {
-                            toggleSidebar(true); // Lebarkan saat restore
+                            toggleSidebar(true);
                         }
                     });
-                    // Atur keadaan awal saat aplikasi pertama kali dimuat
                     toggleSidebar(!stage.isMaximized());
                 }
             }
