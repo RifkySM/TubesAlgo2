@@ -14,7 +14,7 @@ import java.util.UUID;
  * Menangani logika bisnis dan validasi untuk entitas Announcement.
  * Terintegrasi dengan Helper untuk menampilkan dialog.
  */
-public class AnnouncementService {
+public class    AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
 
