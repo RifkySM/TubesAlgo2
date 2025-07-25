@@ -1,13 +1,20 @@
 package com.activa.controllers.announcement;
 
+import com.activa.models.Activity;
 import com.activa.models.Announcement;
 import com.activa.services.AnnouncementService;
+import com.activa.utils.Helper;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Optional;
 
 public class AnnouncementModalController {
 
@@ -28,13 +35,29 @@ public class AnnouncementModalController {
     // Data model for the current announcement being edited
     private Announcement currentAnnouncement;
     private boolean isEditMode;
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
 
     /**
      * Initializes the modal with data for an existing announcement.
      * @param announcement The announcement to be edited.
      */
     public void initData(Announcement announcement) {
-        // Method body is intentionally left empty as requested.
+        this.currentAnnouncement = announcement;
+        this.isEditMode = true;
+        titleText.setText("Edit Announcement");
+
+        titleField.setText(announcement.getTitle());
+        descriptionArea.setText(announcement.getDescription());
+
+        if (announcement.getStart() != null) {
+            startDatePicker.setValue(announcement.getStart().toLocalDate());
+            startTimeField.setText(announcement.getStart().toLocalTime().format(timeFormatter));
+        }
+        if (announcement.getEnd() != null) {
+            endDatePicker.setValue(announcement.getEnd().toLocalDate());
+            endTimeField.setText(announcement.getEnd().toLocalTime().format(timeFormatter));
+        }
     }
 
     /**
@@ -42,21 +65,59 @@ public class AnnouncementModalController {
      */
     @FXML
     private void handleSave() {
-        // Method body is intentionally left empty as requested.
+        String title = titleField.getText();
+        String description = descriptionArea.getText();
+
+        LocalDateTime startDateTime = parseDateTime(startDatePicker, startTimeField, "Waktu Mulai");
+        if (startDateTime == null && startDatePicker.getValue() != null) return; // Error parsing, stop process
+
+        LocalDateTime endDateTime = parseDateTime(endDatePicker, endTimeField, "Waktu Selesai");
+        if (endDateTime == null && endDatePicker.getValue() != null) return; // Error parsing, stop process
+
+        boolean success;
+        if (isEditMode) {
+            success = announcementService.updateAnnouncement(currentAnnouncement.getId(), title, description, startDateTime, endDateTime);
+        } else {
+            Optional<Announcement> newAnnouncement = announcementService.createAnnouncement(title, description, startDateTime, endDateTime);
+            success = newAnnouncement.isPresent();
+        }
+
+        if (success) {
+            closeWindow();
+        }
     }
 
-    /**
-     * Handles the action of clicking the 'Cancel' button.
-     */
+    private LocalDateTime parseDateTime(DatePicker datePicker, TextField timeField, String fieldName) {
+        LocalDate date = datePicker.getValue();
+        String timeText = timeField.getText();
+
+        if (date == null && (timeText == null || timeText.isBlank())) {
+            return null; // Field sengaja dikosongkan
+        }
+        if (date == null) {
+            Helper.showAlert("Error", "Tanggal untuk '" + fieldName + "' harus diisi jika waktu diisi.", Alert.AlertType.ERROR);
+            return null;
+        }
+        if (timeText == null || timeText.isBlank()) {
+            timeText = "00:00"; // Default time if empty
+        }
+
+        try {
+            LocalTime time = LocalTime.parse(timeText, timeFormatter);
+            return LocalDateTime.of(date, time);
+        } catch (DateTimeParseException e) {
+            Helper.showAlert("Format Salah", "Format waktu untuk '" + fieldName + "' harus HH:mm (contoh: 14:30).", Alert.AlertType.ERROR);
+            return null;
+        }
+    }
+
     @FXML
     private void handleCancel() {
-        // Method body is intentionally left empty as requested.
+        closeWindow();
     }
 
-    /**
-     * Closes the modal window.
-     */
     private void closeWindow() {
-        // Method body is intentionally left empty as requested.
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
     }
 }
