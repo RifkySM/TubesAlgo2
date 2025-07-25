@@ -1,8 +1,6 @@
 package com.activa.controllers.announcement;
 
 import com.activa.App;
-import com.activa.controllers.activity.ActivityModalController;
-import com.activa.models.Activity;
 import com.activa.models.Announcement;
 import com.activa.services.AnnouncementService;
 import com.activa.utils.Helper;
@@ -36,63 +34,64 @@ public class AnnouncementListController {
     @FXML private TextField searchField;
 
     // Service for business logic
-    private AnnouncementService announcementService = new AnnouncementService();
+    private final AnnouncementService announcementService = new AnnouncementService();
 
     // Data lists for the table
-    private ObservableList<Announcement> announcementList = FXCollections.observableArrayList();
+    private final ObservableList<Announcement> announcementList = FXCollections.observableArrayList();
     private FilteredList<Announcement> filteredAnnouncementList;
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
     @FXML
     private void initialize() {
+        // Set up table columns to bind to Announcement properties
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startFormatted"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endFormatted"));
 
+        // Set up the search filter and bind the list to the table
+        setupSearchFilter();
+        // Load the initial data from the service
         loadAnnouncements();
-        setupSearchFilter(); // Panggil metode untuk setup filter
 
+        // Set button actions
         btnAdd.setOnAction(event -> handleAddAnnouncement());
         btnEdit.setOnAction(event -> handleEditAnnouncement());
         btnDelete.setOnAction(event -> handleDeleteAnnouncement());
     }
 
     /**
-     * Loads announcements from the service and populates the table.
+     * Loads announcements from the service and populates the master list.
      */
     private void loadAnnouncements() {
         announcementList.setAll(announcementService.getAllAnnouncements());
     }
 
     /**
-     * Sets up the search filter functionality for the TableView.
+     * Sets up the search filter and binds the filtered list to the TableView.
      */
     private void setupSearchFilter() {
         filteredAnnouncementList = new FilteredList<>(announcementList, p -> true);
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredAnnouncementList.setPredicate(activity -> {
+            filteredAnnouncementList.setPredicate(announcement -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                // Filter berdasarkan judul aktivitas
-                return activity.getTitle().toLowerCase().contains(lowerCaseFilter);
+                return announcement.getTitle().toLowerCase().contains(lowerCaseFilter);
             });
         });
 
-        // Mengikat tabel ke daftar yang sudah difilter
+        // **FIX:** Bind the filtered list to the TableView to ensure data is displayed.
+        tableView.setItems(filteredAnnouncementList);
     }
 
     /**
      * Handles the action of clicking the 'Add' button.
      */
     private void handleAddAnnouncement() {
-        // Method body is intentionally left empty as requested.
+        // **FIX:** Call the modal form to add a new announcement.
+        openAnnouncementFormModal(null);
     }
 
     /**
@@ -116,8 +115,11 @@ public class AnnouncementListController {
             Helper.showAlert("Peringatan", "Pilih announcement yang ingin di hapus", Alert.AlertType.WARNING);
             return;
         }
-        if (announcementService.deleteAnnouncement(selectedAnnouncement.getId())){
-            loadAnnouncements();
+
+        if (Helper.showConfirmation("Confirm Deletion", "Are you sure you want to delete this announcement?")) {
+            if (announcementService.deleteAnnouncement(selectedAnnouncement.getId())){
+                loadAnnouncements();
+            }
         }
     }
 
