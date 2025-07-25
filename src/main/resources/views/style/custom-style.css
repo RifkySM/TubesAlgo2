@@ -109,7 +109,7 @@
 }
 
 .button.active {
-    -fx-background-color: #007bff;
+    -fx-background-color: #015CBD;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
