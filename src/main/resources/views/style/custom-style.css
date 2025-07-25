@@ -113,3 +113,13 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
+.transparent-scrollpane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.transparent-scrollpane .viewport {
+    -fx-background-color: transparent;
+}
