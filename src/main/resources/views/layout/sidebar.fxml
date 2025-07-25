@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" minHeight="665.0" minWidth="170.0" prefHeight="665.0" prefWidth="190.0" styleClass="bg-blue-950" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.layout.SidebarController">
+<VBox alignment="CENTER" minHeight="665.0" minWidth="170.0" prefHeight="665.0" prefWidth="190.0" styleClass="bg-sky-600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.layout.SidebarController">
    <children>
       <VBox alignment="CENTER" prefHeight="163.0" prefWidth="170.0" spacing="10.0">
          <children>
             <ImageView fitHeight="106.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/profile-sample.png" />
+                  <Image url="@../../images/profile%20user.png" />
                </image>
             </ImageView>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">

@@ -10,6 +10,8 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -19,22 +21,30 @@
    <children>
       <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="537.0" prefWidth="845.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <Pane prefHeight="200.0" prefWidth="430.0" styleClass="bg-blue-950" />
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="270.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/LOGO%20ACTIVA.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="bg-sky-600">
                <children>
                   <HBox fx:id="topbar" alignment="TOP_RIGHT" spacing="13.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <Button fx:id="btnMinimize" onAction="#handleMinimize" styleClass="window-button">
+                        <Button fx:id="btnMinimize" onAction="#handleMinimize" styleClass="window-button" textFill="WHITE">
                            <graphic>
-                              <FontAwesomeIconView glyphName="MINUS" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS" />
                            </graphic>
                         </Button>
                         <Button fx:id="btnClose" onAction="#handleClose" styleClass="window-button-close">
                            <graphic>
-                              <FontAwesomeIconView glyphName="TIMES" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="TIMES" />
                            </graphic>
                         </Button>
                      </children>
@@ -45,7 +55,8 @@
                         <Label text="Username">
                            <styleClass>
                               <String fx:value="text-xl" />
-                              <String fx:value="text-fill-black" />
+                              <String fx:value="text-fill-white" />
+                              <String fx:value="font-bold" />
                            </styleClass>
                         </Label>
                         <!-- Add the styleClass and promptText -->
@@ -62,7 +73,8 @@
                         <Label text="Password">
                            <styleClass>
                               <String fx:value="text-xl" />
-                              <String fx:value="text-fill-black" />
+                              <String fx:value="text-fill-white" />
+                              <String fx:value="font-bold" />
                            </styleClass>
                         </Label>
                         <!-- Add the styleClass and promptText -->
@@ -77,7 +89,7 @@
                     <buttons>
                         <Button fx:id="btnRegistration" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" onAction="#openRegistrationWindow" text="Registration">
                            <styleClass>
-                              <String fx:value="bg-blue-800" />
+                              <String fx:value="bg-sky-600" />
                               <String fx:value="text-fill-white" />
                               <String fx:value="font-bold" />
                            </styleClass>
@@ -87,7 +99,7 @@
                         </Button>
                         <Button fx:id="btnLogin" layoutX="313.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogin" text="Login">
                            <styleClass>
-                              <String fx:value="bg-blue-950" />
+                              <String fx:value="bg-emerald-500" />
                               <String fx:value="text-fill-white" />
                               <String fx:value="font-bold" />
                            </styleClass>

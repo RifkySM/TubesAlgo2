@@ -65,17 +65,13 @@ public class DashboardController {
 
         date.setText(getCurrentDate());
 
-
-
-
         text.setText("Welcome " + SessionManager.getInstance().getCurrentUser().getName());
     }
 
     public void setAnnouncementList() {
         List<Announcement> announcements = dashboardService.getAnnouncement();
 
-        AnnouncementList.getChildren().clear(); // Kosongkan dulu kalau ada isi sebelumnya
-
+        AnnouncementList.getChildren().clear();
         for (Announcement announcement : announcements) {
             VBox box = createAnnouncementBox(announcement.getTitle(), announcement.getDescription());
             AnnouncementList.getChildren().add(box);
@@ -85,21 +81,11 @@ public class DashboardController {
     public String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
 
-        // Create a Locale for Indonesia (Bahasa Indonesia)
         Locale indonesiaLocale = new Locale("id", "ID");
 
-        // 1. Format using a standard, full-length style for the locale
-        DateTimeFormatter fullFormatter = DateTimeFormatter
-                .ofLocalizedDate(FormatStyle.FULL)
-                .withLocale(indonesiaLocale);
-        String formattedDateFull = currentDate.format(fullFormatter);
-        System.out.println("Standard Full Format: " + formattedDateFull);
-
         DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy", indonesiaLocale);
-        String formattedDateCustom = currentDate.format(customFormatter);
-        System.out.println("Custom Pattern Format: " + formattedDateCustom);
 
-        return formattedDateCustom;
+        return currentDate.format(customFormatter);
     }
 
     private VBox createAnnouncementBox(String title, String description) {
@@ -107,7 +93,7 @@ public class DashboardController {
         vBox.setPrefWidth(923);
         vBox.setPrefHeight(178);
         vBox.setPadding(new Insets(30));
-        vBox.getStyleClass().addAll("bg-rounded-3xl", "bg-amber-100");
+        vBox.getStyleClass().addAll("bg-rounded-3xl", "bg-yellow-300");
 
         Text titleText = new Text(title);
         titleText.setFont(Font.font(25));
