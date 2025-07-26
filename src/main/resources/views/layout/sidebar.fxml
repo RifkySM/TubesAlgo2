@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import java.lang.String?>
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" minHeight="665.0" minWidth="170.0" prefHeight="665.0" prefWidth="190.0" styleClass="bg-sky-600" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.layout.SidebarController">
+<VBox alignment="CENTER" minHeight="665.0" minWidth="170.0" prefHeight="665.0" prefWidth="190.0" styleClass="bg-sky-600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.activa.controllers.layout.SidebarController">
    <children>
       <VBox alignment="CENTER" prefHeight="163.0" prefWidth="170.0" spacing="10.0">
          <children>
@@ -62,7 +58,7 @@
             </Button>
              <Accordion styleClass="transparent-accordion">
                  <panes>
-                     <TitledPane animated="false" text="Member">
+                     <TitledPane fx:id="menuMember" animated="false" text="Member">
                          <content>
                              <VBox alignment="CENTER">
                                  <children>
@@ -73,7 +69,7 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="FOLDER" size="20" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20" />
                                  </graphic>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -85,7 +81,7 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="INBOX" size="20" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" size="20" />
                                  </graphic>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -95,7 +91,7 @@
                              </VBox>
                          </content>
                      </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="55.0" text="Announcement">
+                  <TitledPane fx:id="menuAnnouncement" animated="false" layoutX="10.0" layoutY="55.0" text="Announcement">
                      <content>
                         <VBox alignment="CENTER_LEFT">
                            <children>
@@ -106,7 +102,7 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="FOLDER" size="20" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="NAVICON" size="20" />
                                  </graphic>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -116,7 +112,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="10.0" text="Activity">
+                  <TitledPane fx:id="menuActivity" animated="false" layoutX="10.0" layoutY="10.0" text="Activity">
                      <content>
                         <VBox alignment="CENTER_LEFT">
                            <children>
@@ -127,7 +123,7 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="FOLDER" size="20" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="NAVICON" size="20" />
                                  </graphic>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -140,7 +136,7 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="INBOX" size="20" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="CHECK" size="20" />
                                  </graphic>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -150,7 +146,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="100.0" text="User">
+                  <TitledPane fx:id="menuUser" animated="false" layoutX="10.0" layoutY="100.0" text="User">
                      <content>
                         <VBox alignment="CENTER_LEFT">
                            <children>
@@ -161,7 +157,7 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="FOLDER" size="20" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20" />
                                  </graphic>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -171,7 +167,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="35.0" text="Report">
+                  <TitledPane fx:id="menuReport" animated="false" layoutX="10.0" layoutY="35.0" text="Report">
                      <content>
                         <VBox alignment="CENTER">
                            <children>
@@ -182,8 +178,11 @@
                                     <String fx:value="font-bold" />
                                  </styleClass>
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="NAVICON" />
                                  </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
                         </VBox>
@@ -197,6 +196,19 @@
          </VBox.margin>
       </VBox>
       <Region layoutX="10.0" layoutY="220.0" prefHeight="17.0" prefWidth="190.0" VBox.vgrow="ALWAYS" />
+      <Button fx:id="btnProfile" layoutX="30.0" layoutY="619.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Club Profile">
+         <styleClass>
+            <String fx:value="bg-transparent" />
+            <String fx:value="text-fill-white" />
+            <String fx:value="font-bold" />
+         </styleClass>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="INFO" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
       <Button fx:id="btnLogout" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Logout" VBox.vgrow="ALWAYS">
          <styleClass>
             <String fx:value="bg-transparent" />

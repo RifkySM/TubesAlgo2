@@ -499,7 +499,7 @@
     </routine>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-07-20.13:43:17</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-07-25.22:07:36</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1594,326 +1594,380 @@
     <table id="556" parent="191" name="announcement"/>
     <table id="557" parent="191" name="attendance"/>
     <table id="558" parent="191" name="members"/>
-    <table id="559" parent="191" name="requests"/>
-    <table id="560" parent="191" name="sqlite_master">
+    <table id="559" parent="191" name="parameters"/>
+    <table id="560" parent="191" name="requests"/>
+    <table id="561" parent="191" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="561" parent="191" name="users"/>
-    <column id="562" parent="555" name="id">
+    <table id="562" parent="191" name="users"/>
+    <column id="563" parent="555" name="id">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="563" parent="555" name="title">
+    <column id="564" parent="555" name="title">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="564" parent="555" name="description">
+    <column id="565" parent="555" name="description">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="565" parent="555" name="start">
+    <column id="566" parent="555" name="start">
       <Position>4</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="566" parent="555" name="end">
+    <column id="567" parent="555" name="end">
       <Position>5</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="567" parent="555" name="created_at">
+    <column id="568" parent="555" name="created_at">
       <Position>6</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="568" parent="555" name="updated_at">
+    <column id="569" parent="555" name="updated_at">
       <Position>7</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="569" parent="555" name="deleted_at">
+    <column id="570" parent="555" name="deleted_at">
       <Position>8</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <index id="570" parent="555" name="sqlite_autoindex_activities_1">
+    <index id="571" parent="555" name="sqlite_autoindex_activities_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="571" parent="555">
+    <key id="572" parent="555">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_activities_1</UnderlyingIndexName>
     </key>
-    <column id="572" parent="556" name="id">
+    <column id="573" parent="556" name="id">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="573" parent="556" name="title">
+    <column id="574" parent="556" name="title">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="574" parent="556" name="description">
+    <column id="575" parent="556" name="description">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="575" parent="556" name="start">
+    <column id="576" parent="556" name="start">
       <Position>4</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="576" parent="556" name="end">
+    <column id="577" parent="556" name="end">
       <Position>5</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="577" parent="556" name="created_at">
+    <column id="578" parent="556" name="created_at">
       <Position>6</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="578" parent="556" name="updated_at">
+    <column id="579" parent="556" name="updated_at">
       <Position>7</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="579" parent="556" name="deleted_at">
+    <column id="580" parent="556" name="deleted_at">
       <Position>8</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <index id="580" parent="556" name="sqlite_autoindex_announcement_1">
+    <index id="581" parent="556" name="sqlite_autoindex_announcement_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="581" parent="556">
+    <key id="582" parent="556">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_announcement_1</UnderlyingIndexName>
     </key>
-    <column id="582" parent="557" name="id">
+    <column id="583" parent="557" name="id">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="583" parent="557" name="activity_id">
+    <column id="584" parent="557" name="activity_id">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="584" parent="557" name="member_id">
+    <column id="585" parent="557" name="member_id">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="585" parent="557" name="created_at">
+    <column id="586" parent="557" name="created_at">
       <Position>4</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="586" parent="557" name="updated_at">
+    <column id="587" parent="557" name="updated_at">
       <Position>5</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="587" parent="557" name="deleted_at">
+    <column id="588" parent="557" name="deleted_at">
       <Position>6</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <foreign-key id="588" parent="557">
+    <foreign-key id="589" parent="557">
       <ColNames>activity_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>activities</RefTableName>
     </foreign-key>
-    <foreign-key id="589" parent="557">
+    <foreign-key id="590" parent="557">
       <ColNames>member_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>members</RefTableName>
     </foreign-key>
-    <index id="590" parent="557" name="sqlite_autoindex_attendance_1">
+    <index id="591" parent="557" name="sqlite_autoindex_attendance_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="591" parent="557">
+    <key id="592" parent="557">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_attendance_1</UnderlyingIndexName>
     </key>
-    <check id="592" parent="558">
+    <check id="593" parent="558">
       <Predicate>&quot;is_active&quot; IN (0, 1)</Predicate>
     </check>
-    <column id="593" parent="558" name="id">
+    <column id="594" parent="558" name="id">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="594" parent="558" name="user_id">
+    <column id="595" parent="558" name="user_id">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="595" parent="558" name="nim">
+    <column id="596" parent="558" name="nim">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="596" parent="558" name="name">
+    <column id="597" parent="558" name="name">
       <Position>4</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="597" parent="558" name="birth_date">
+    <column id="598" parent="558" name="birth_date">
       <Position>5</Position>
       <StoredType>DATE|0s</StoredType>
     </column>
-    <column id="598" parent="558" name="contact">
+    <column id="599" parent="558" name="contact">
       <Position>6</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="599" parent="558" name="email">
+    <column id="600" parent="558" name="email">
       <Position>7</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="600" parent="558" name="address">
+    <column id="601" parent="558" name="address">
       <Position>8</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="601" parent="558" name="is_active">
+    <column id="602" parent="558" name="is_active">
       <Position>9</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="602" parent="558" name="joined_at">
+    <column id="603" parent="558" name="joined_at">
       <Position>10</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="603" parent="558" name="created_at">
+    <column id="604" parent="558" name="created_at">
       <Position>11</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="604" parent="558" name="updated_at">
+    <column id="605" parent="558" name="updated_at">
       <Position>12</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="605" parent="558" name="deleted_at">
+    <column id="606" parent="558" name="deleted_at">
       <Position>13</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <foreign-key id="606" parent="558">
+    <foreign-key id="607" parent="558">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="607" parent="558" name="sqlite_autoindex_members_1">
+    <index id="608" parent="558" name="sqlite_autoindex_members_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="608" parent="558">
+    <key id="609" parent="558">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_members_1</UnderlyingIndexName>
     </key>
-    <check id="609" parent="559">
-      <Predicate>&quot;status&quot; IN (&apos;PENDING&apos;, &apos;APPROVED&apos;, &apos;REJECTED&apos;, &apos;CANCELED&apos;)</Predicate>
-    </check>
     <column id="610" parent="559" name="id">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="611" parent="559" name="member_id">
+    <column id="611" parent="559" name="title">
       <Position>2</Position>
-      <StoredType>TEXT|0s</StoredType>
+      <StoredType>VARCHAR(255)|0s</StoredType>
     </column>
-    <column id="612" parent="559" name="status">
+    <column id="612" parent="559" name="key">
       <Position>3</Position>
-      <StoredType>TEXT|0s</StoredType>
+      <StoredType>VARCHAR(255)|0s</StoredType>
     </column>
-    <column id="613" parent="559" name="note">
+    <column id="613" parent="559" name="content">
       <Position>4</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
     <column id="614" parent="559" name="created_at">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>5</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
     <column id="615" parent="559" name="updated_at">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>6</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="616" parent="559" name="deleted_at">
+    <index id="616" parent="559" name="sqlite_autoindex_parameters_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="617" parent="559" name="sqlite_autoindex_parameters_2">
+      <ColNames>key</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="618" parent="559">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_parameters_1</UnderlyingIndexName>
+    </key>
+    <key id="619" parent="559">
+      <ColNames>key</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_parameters_2</UnderlyingIndexName>
+    </key>
+    <trigger id="620" parent="559" name="update_parameters_updated_at">
+      <Events>U</Events>
+      <SourceTextLength>177</SourceTextLength>
+    </trigger>
+    <check id="621" parent="560">
+      <Predicate>&quot;status&quot; IN (&apos;PENDING&apos;, &apos;APPROVED&apos;, &apos;REJECTED&apos;, &apos;CANCELED&apos;)</Predicate>
+    </check>
+    <column id="622" parent="560" name="id">
+      <Position>1</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="623" parent="560" name="member_id">
+      <Position>2</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="624" parent="560" name="status">
+      <Position>3</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="625" parent="560" name="note">
+      <Position>4</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="626" parent="560" name="created_at">
+      <Position>5</Position>
+      <StoredType>DATETIME|0s</StoredType>
+    </column>
+    <column id="627" parent="560" name="updated_at">
+      <Position>6</Position>
+      <StoredType>DATETIME|0s</StoredType>
+    </column>
+    <column id="628" parent="560" name="deleted_at">
       <Position>7</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <foreign-key id="617" parent="559">
+    <column id="629" parent="560" name="motivation">
+      <Position>8</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <foreign-key id="630" parent="560">
       <ColNames>member_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>members</RefTableName>
     </foreign-key>
-    <index id="618" parent="559" name="sqlite_autoindex_requests_1">
+    <index id="631" parent="560" name="sqlite_autoindex_requests_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="619" parent="559">
+    <key id="632" parent="560">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_requests_1</UnderlyingIndexName>
     </key>
-    <column id="620" parent="560" name="type">
+    <column id="633" parent="561" name="type">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="621" parent="560" name="name">
+    <column id="634" parent="561" name="name">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="622" parent="560" name="tbl_name">
+    <column id="635" parent="561" name="tbl_name">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="623" parent="560" name="rootpage">
+    <column id="636" parent="561" name="rootpage">
       <Position>4</Position>
       <StoredType>INT|0s</StoredType>
     </column>
-    <column id="624" parent="560" name="sql">
+    <column id="637" parent="561" name="sql">
       <Position>5</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <check id="625" parent="561">
+    <check id="638" parent="562">
       <Predicate>&quot;role&quot; IN (&apos;Admin&apos;, &apos;Member&apos;)</Predicate>
     </check>
-    <column id="626" parent="561" name="id">
+    <column id="639" parent="562" name="id">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="627" parent="561" name="role">
+    <column id="640" parent="562" name="role">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="628" parent="561" name="name">
+    <column id="641" parent="562" name="name">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="629" parent="561" name="username">
+    <column id="642" parent="562" name="username">
       <Position>4</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="630" parent="561" name="password">
+    <column id="643" parent="562" name="password">
       <Position>5</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="631" parent="561" name="created_at">
+    <column id="644" parent="562" name="created_at">
       <Position>6</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="632" parent="561" name="updated_at">
+    <column id="645" parent="562" name="updated_at">
       <Position>7</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <column id="633" parent="561" name="deleted_at">
+    <column id="646" parent="562" name="deleted_at">
       <Position>8</Position>
       <StoredType>DATETIME|0s</StoredType>
     </column>
-    <index id="634" parent="561" name="sqlite_autoindex_users_1">
+    <index id="647" parent="562" name="sqlite_autoindex_users_1">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <index id="635" parent="561" name="sqlite_autoindex_users_2">
+    <index id="648" parent="562" name="sqlite_autoindex_users_2">
       <ColNames>username</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="636" parent="561">
+    <key id="649" parent="562">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_users_1</UnderlyingIndexName>
     </key>
-    <key id="637" parent="561">
+    <key id="650" parent="562">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_users_2</UnderlyingIndexName>
     </key>

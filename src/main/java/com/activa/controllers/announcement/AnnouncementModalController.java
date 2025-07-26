@@ -1,6 +1,5 @@
 package com.activa.controllers.announcement;
 
-import com.activa.models.Activity;
 import com.activa.models.Announcement;
 import com.activa.services.AnnouncementService;
 import com.activa.utils.Helper;
@@ -17,8 +16,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 public class AnnouncementModalController {
-
-    // FXML bindings for UI elements
     @FXML private Text titleText;
     @FXML private TextField titleField;
     @FXML private TextArea descriptionArea;
@@ -29,12 +26,10 @@ public class AnnouncementModalController {
     @FXML private Button btnSave;
     @FXML private Button btnCancel;
 
-    // Service for business logic
-    private AnnouncementService announcementService;
+    private final AnnouncementService announcementService = new AnnouncementService();
 
-    // Data model for the current announcement being edited
     private Announcement currentAnnouncement;
-    private boolean isEditMode;
+    private boolean isEditMode = false;
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 
@@ -92,14 +87,14 @@ public class AnnouncementModalController {
         String timeText = timeField.getText();
 
         if (date == null && (timeText == null || timeText.isBlank())) {
-            return null; // Field sengaja dikosongkan
+            return null;
         }
         if (date == null) {
             Helper.showAlert("Error", "Tanggal untuk '" + fieldName + "' harus diisi jika waktu diisi.", Alert.AlertType.ERROR);
             return null;
         }
         if (timeText == null || timeText.isBlank()) {
-            timeText = "00:00"; // Default time if empty
+            timeText = "00:00";
         }
 
         try {

@@ -1,4 +1,4 @@
-package com.activa.controllers.registration;
+package com.activa.controllers.club;
 
 import com.activa.services.MemberRegistrationService;
 import com.activa.utils.Helper;
@@ -8,35 +8,32 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class RegistrationMemberController {
+public class ProfileController {
     @FXML private Button btnClose;
     @FXML private Button btnMinimize;
+    @FXML private Text clubName;
     @FXML private AnchorPane rootPane;
+    @FXML private Label textBenefit;
+    @FXML private Label textDescription;
+    @FXML private Label textVisiMisi;
     @FXML private HBox topbar;
-
-    @FXML private TextArea inputAddress;
-    @FXML private DatePicker inputBirthDate;
-    @FXML private TextField inputEmail;
-    @FXML private TextField inputNIM;
-    @FXML private TextField inputName;
-    @FXML private TextArea inputNote;
 
     private double xOffset = 0;
     private double yOffset = 0;
 
-    private MemberRegistrationService memberRegistrationService;
-
     @FXML
     private void initialize() {
-        this.memberRegistrationService = new MemberRegistrationService();
         setupDraggableWindow();
     }
 
@@ -76,46 +73,23 @@ public class RegistrationMemberController {
     }
 
     @FXML
-    private void openLoginWindow () {
+    private void openRegistrationWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/auth/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/club/registration.fxml"));
             Parent dashboardRoot = loader.load();
 
-            Stage stage = new Stage();
-            stage.setTitle("Activa - Login");
-            stage.setScene(new Scene(dashboardRoot));
+            Stage dashboardStage = new Stage();
+            dashboardStage.setTitle("Activa - Registration");
+            dashboardStage.setScene(new Scene(dashboardRoot));
 
-            stage.initStyle(StageStyle.UNDECORATED);
+            dashboardStage.initStyle(StageStyle.UNDECORATED);
             closeCurrentStage();
-            stage.show();
+            dashboardStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
             Helper.showAlert("Internal Error!", "Please contact the Admin!", Alert.AlertType.ERROR);
         }
-    }
-    @FXML
-    private void openProfileClub () {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/club/profile.fxml"));
-            Parent dashboardRoot = loader.load();
-
-            Stage stage = new Stage();
-            stage.setTitle("Activa - Profile Club");
-            stage.setScene(new Scene(dashboardRoot));
-
-            stage.initStyle(StageStyle.UNDECORATED);
-            closeCurrentStage();
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Helper.showAlert("Internal Error!", "Please contact the Admin!", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    private void handleRegister(ActionEvent event) {
     }
 
     private void closeCurrentStage() {
