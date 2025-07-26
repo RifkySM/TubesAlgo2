@@ -144,7 +144,17 @@
                         <Region prefHeight="200.0" prefWidth="200.0" />
                         <ButtonBar layoutX="10.0" layoutY="275.0" prefHeight="40.0" prefWidth="200.0">
                            <buttons>
-                              <Button mnemonicParsing="false" onAction="#openLoginWindow" text="Back to Login Page">
+                              <Button mnemonicParsing="false" onAction="#openProfileClub" text="Open Club Profile">
+                                 <styleClass>
+                                    <String fx:value="bg-blue-800" />
+                                    <String fx:value="text-fill-white" />
+                                    <String fx:value="font-bold" />
+                                 </styleClass>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="NAVICON" size="20" />
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="347.0" layoutY="10.0" mnemonicParsing="false" onAction="#openLoginWindow" text="Back to Login Page">
                                  <styleClass>
                                     <String fx:value="bg-blue-800" />
                                     <String fx:value="text-fill-white" />

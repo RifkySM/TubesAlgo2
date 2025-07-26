@@ -2,6 +2,7 @@ package com.activa.controllers.dashboard;
 
 import com.activa.models.Activity;
 import com.activa.models.Announcement;
+import com.activa.models.User;
 import com.activa.services.DashboardService;
 import com.activa.utils.SessionManager;
 import javafx.collections.FXCollections;
@@ -16,44 +17,26 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Locale;
 
 public class DashboardController {
     public DashboardService dashboardService = new DashboardService();
-    @FXML
-    private Text ActiveCount;
+    @FXML private Text ActiveCount;
+    @FXML private TableColumn<Activity, String> ActivityCol;
+    @FXML private HBox AnnouncementList;
+    @FXML private TableColumn<Activity, String> EndCol;
+    @FXML private Text InActiveCount;
+    @FXML private Text PendingRequestCount;
+    @FXML private TableColumn<Activity, String> StartCol;
+    @FXML private TableView<Activity> TableView;
+    @FXML private Text date;
+    @FXML private Text text;
+    @FXML private HBox sumInfo;
 
-    @FXML
-    private TableColumn<Activity, String> ActivityCol;
-
-    @FXML
-    private HBox AnnouncementList;
-
-    @FXML
-    private TableColumn<Activity, String> EndCol;
-
-    @FXML
-    private Text InActiveCount;
-
-    @FXML
-    private Text PendingRequestCount;
-
-    @FXML
-    private TableColumn<Activity, String> StartCol;
-
-    @FXML
-    private TableView<Activity> TableView;
-
-    @FXML
-    private Text date;
-
-    @FXML
-    private Text text;
+    private User currentUser = SessionManager.getInstance().getCurrentUser();
 
     @FXML
     public void initialize(){
@@ -65,7 +48,13 @@ public class DashboardController {
 
         date.setText(getCurrentDate());
 
-        text.setText("Welcome " + SessionManager.getInstance().getCurrentUser().getName());
+        if(currentUser.getRole().equals("Admin")){
+            sumInfo.setVisible(true);
+            sumInfo.setManaged(true);
+        }else{
+            sumInfo.setVisible(false);
+            sumInfo.setManaged(false);
+        }
     }
 
     public void setAnnouncementList() {
@@ -90,8 +79,8 @@ public class DashboardController {
 
     private VBox createAnnouncementBox(String title, String description) {
         VBox vBox = new VBox();
-        vBox.setPrefWidth(923);
-        vBox.setPrefHeight(178);
+        vBox.setPrefWidth(900);
+        vBox.setPrefHeight(170);
         vBox.setPadding(new Insets(30));
         vBox.getStyleClass().addAll("bg-rounded-3xl", "bg-yellow-300");
 
@@ -113,16 +102,11 @@ public class DashboardController {
 
     public void SetActivity() {
         List<Activity> activities = dashboardService.getAllActivity();
-
-        // Konversi list biasa ke ObservableList
         ObservableList<Activity> activityList = FXCollections.observableArrayList(activities);
-
-        // Mapping kolom ke property di kelas Activity
         ActivityCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        StartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        EndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        StartCol.setCellValueFactory(new PropertyValueFactory<>("startFormatted"));
+        EndCol.setCellValueFactory(new PropertyValueFactory<>("endFormatted"));
 
-        // Set data ke TableView
         TableView.setItems(activityList);
     }
 

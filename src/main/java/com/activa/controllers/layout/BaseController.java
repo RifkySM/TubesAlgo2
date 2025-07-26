@@ -204,6 +204,10 @@ public class BaseController {
         Parent view = getView("/views/report/index.fxml");
         setContent(view);
     }
+    public void setProfileContent() throws IOException {
+        Parent view = getView("/views/club/profile_form.fxml");
+        setContent(view);
+    }
 
     public void handleLogout() {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);

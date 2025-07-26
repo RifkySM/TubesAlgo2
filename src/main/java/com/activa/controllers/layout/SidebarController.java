@@ -1,8 +1,10 @@
 package com.activa.controllers.layout;
 
+import com.activa.models.User;
 import com.activa.utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TitledPane;
 import javafx.scene.text.Text; // PERBAIKAN: Mengimpor kelas Text
 
 import java.io.IOException;
@@ -19,17 +21,40 @@ public class SidebarController {
     @FXML private Button btnLogout;
     @FXML private Button btnReport;
     @FXML private Button btnUserList;
+    @FXML private Button btnProfile;
 
-    // PERBAIKAN: Mengubah tipe dari Button menjadi Text agar sesuai dengan FXML
+    @FXML private TitledPane menuActivity;
+    @FXML private TitledPane menuAnnouncement;
+    @FXML private TitledPane menuMember;
+    @FXML private TitledPane menuReport;
+    @FXML private TitledPane menuUser;
+
     @FXML private Text usernameText;
     @FXML private Text roleText;
 
+    private User currentUser;
+    private final SessionManager sessionManager = SessionManager.getInstance();
+
     @FXML
     private void initialize() {
-        // Mengatur tombol dashboard sebagai aktif saat pertama kali dimuat
         setActiveButton(btnDashboard);
 
+        currentUser = sessionManager.getCurrentUser();
+        setUsernameText(currentUser.getUsername());
+        setRoleText(currentUser.getRole());
+        btnLogout.setOnAction(e -> handleLogout());
         btnDashboard.setOnAction(e -> handleButtonClick(btnDashboard, this::setDashboardContent));
+
+        if (!currentUser.getRole().equals("Admin")) {
+            menuActivity.setVisible(false);
+            menuAnnouncement.setVisible(false);
+            menuMember.setVisible(false);
+            menuReport.setVisible(false);
+            menuUser.setVisible(false);
+            btnProfile.setVisible(false);
+            return;
+        }
+
         btnListMember.setOnAction(e -> handleButtonClick(btnListMember, this::setMemberListContent));
         btnListRequest.setOnAction(e -> handleButtonClick(btnListRequest, this::setRequestListContent));
         btnListActivity.setOnAction(e -> handleButtonClick(btnListActivity, this::setActivityListContent));
@@ -37,12 +62,7 @@ public class SidebarController {
         btnAttendance.setOnAction(e -> handleButtonClick(btnAttendance, this::setAttendanceContent));
         btnReport.setOnAction(e -> handleButtonClick(btnReport, this::setBtnReportContent));
         btnUserList.setOnAction(e -> handleButtonClick(btnUserList, this::setBtnUserListContent));
-
-        btnLogout.setOnAction(e -> handleLogout());
-
-        // Mengisi teks username dan role saat inisialisasi
-        setUsernameText(SessionManager.getInstance().getCurrentUser().getName());
-        setRoleText(SessionManager.getInstance().getCurrentUser().getRole());
+        btnProfile.setOnAction(e -> handleButtonClick(btnProfile, this::setProfileContent));
     }
 
     private void handleButtonClick(Button button, ContentLoader contentLoader) {
@@ -72,7 +92,6 @@ public class SidebarController {
     }
 
     private void setActiveButton(Button activeButton) {
-        // Hapus kelas 'active' dari semua tombol
         btnDashboard.getStyleClass().remove("active");
         btnListMember.getStyleClass().remove("active");
         btnListRequest.getStyleClass().remove("active");
@@ -82,8 +101,8 @@ public class SidebarController {
         btnReport.getStyleClass().remove("active");
         btnLogout.getStyleClass().remove("active");
         btnUserList.getStyleClass().remove("active");
+        btnProfile.getStyleClass().remove("active");
 
-        // Tambahkan kelas 'active' ke tombol yang diklik
         if (activeButton != null && !activeButton.getStyleClass().contains("active")) {
             activeButton.getStyleClass().add("active");
         }
@@ -97,6 +116,7 @@ public class SidebarController {
     public void setAttendanceContent() throws IOException { baseController.setAttendanceContent(); }
     public void setBtnUserListContent() throws IOException { baseController.setUserListContent(); }
     public void setBtnReportContent() throws IOException { baseController.setReportContent(); }
+    public void setProfileContent() throws IOException { baseController.setProfileContent(); }
 
     private void handleLogout() {
         if (baseController != null) {

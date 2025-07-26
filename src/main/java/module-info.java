@@ -20,6 +20,7 @@ module com.activa {
     exports com.activa.controllers.activity;
     exports com.activa.controllers.club.approval;
     exports com.activa.controllers.dashboard;
+    exports com.activa.controllers.club;
     exports com.activa.middlewares;
     exports com.activa.models;
     exports com.activa.repositories;
@@ -33,6 +34,7 @@ module com.activa {
     opens com.activa.controllers.member to javafx.fxml;
     opens com.activa.controllers.report to javafx.fxml;
     opens com.activa.controllers.club.approval to javafx.fxml;
+    opens com.activa.controllers.club to javafx.fxml;
     opens com.activa.controllers.auth to javafx.fxml;
     opens com.activa.controllers.activity to javafx.fxml;
     opens com.activa.controllers.attendance to javafx.fxml;
